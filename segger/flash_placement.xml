@@ -37,6 +37,9 @@
   <MemorySegment name="$(FLASH5_NAME:UICR_MBR_PARAM_PAGE)">
     <ProgramSection alignment="4" load="Yes" name=".uicrMbrParamsPageAddress" keep="Yes" />
   </MemorySegment>
+    <MemorySegment name="$(FLASH6_NAME:BOOTLOADER_CONFIG)">
+    <ProgramSection alignment="4" load="Yes" name=".bootloaderConfig" keep="Yes" />
+  </MemorySegment>
   <MemorySegment name="$(RAM2_NAME:NOINIT)">
     <ProgramSection alignment="4" load="No" name=".noinit" />
   </MemorySegment>

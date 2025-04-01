@@ -118,7 +118,7 @@
 
 #define CRC16_ENABLED                      1
 #define NRF_STRERROR_ENABLED               1
-
+#define RETARGET_ENABLED                   0
 
 #endif //SDK_CONFIG_H
 

@@ -1,5 +1,7 @@
 <!DOCTYPE CrossStudio_Project_File>
 <solution Name="Adafruit_nRF52_Bootloader" target="8" version="2">
+  <configuration Name="Feather52832" />
+  <configuration LIBRARY_IO_TYPE="RTT" Name="Feather52840" />
   <project Name="Adafruit_nRF52_Bootloader">
     <configuration
       Name="Common"
@@ -30,160 +32,36 @@
       linker_memory_map_file="$(ProjectDir)/nRF52840_xxAA_MemoryMap.xml"
       linker_printf_width_precision_supported="Yes"
       linker_section_placement_file="$(ProjectDir)/flash_placement.xml"
+      linker_section_placement_macros="FLASH_START=0xF4000;FLASH_SIZE=0xA000"
       macros="DeviceHeaderFile=$(PackagesDir)/nRF/CMSIS/Device/Include/nrf.h;DeviceLibraryIdentifier=M4lf;DeviceSystemFile=$(PackagesDir)/nRF/CMSIS/Device/Source/system_nrf52840.c;DeviceVectorsFile=$(PackagesDir)/nRF/Source/ses_nrf52840_Vectors.s;DeviceFamily=nRF;Target=nRF52840_xxAA;Placement=Flash;sdkDir=../lib/sdk/components;sdk11Dir=../lib/sdk11/components;sdDir=../lib/softdevice/s140_nrf52_6.1.1/s140_nrf52_6.1.1_API;tusbDir=../lib/tinyusb/src;nrfxDir=../lib/nrfx"
       project_directory=""
       project_type="Executable"
       target_reset_script="Reset();"
       target_script_file="$(ProjectDir)/nRF_Target.js"
       target_trace_initialize_script="EnableTrace(&quot;$(TraceInterfaceType)&quot;)" />
-    <folder Name="RTT Files">
-      <file file_name="SEGGER_RTT.c" />
-      <file file_name="SEGGER_RTT.h" />
-      <file file_name="SEGGER_RTT_Conf.h" />
-      <file file_name="SEGGER_RTT_SES.c" />
-    </folder>
-    <folder Name="Script Files">
-      <file file_name="nRF_Target.js">
-        <configuration Name="Common" file_type="Reset Script" />
-      </file>
-    </folder>
-    <folder Name="System Files">
-      <file file_name="thumb_crt0.s" />
-      <file file_name="flash_placement.xml" />
-      <file file_name="nRF52840_xxAA_MemoryMap.xml" />
-      <file file_name="nRF52832_xxAA_MemoryMap.xml" />
-    </folder>
     <configuration Name="Debug Single" gcc_optimization_level="Debug" />
+    <configuration
+      Name="Feather52832"
+      c_preprocessor_definitions="NRF52832_XXAA;S132"
+      c_user_include_directories="../src/boards/feather_nrf52832"
+      gcc_optimization_level="Debug"
+      linker_memory_map_file="nRF52832_xxAA_MemoryMap.xml" />
+    <configuration
+      Name="Feather52840"
+      c_preprocessor_definitions="NRF52840_XXAA;S140"
+      c_user_include_directories="../src/boards/feather_nrf52840_express"
+      gcc_optimization_level="Level 2 for size"
+      link_linker_script_file="../linker/nrf_common.ld,../linker/nrf52840.ld"
+      link_use_linker_script_file="Yes"
+      linker_memory_map_file="nRF52840_xxAA_MemoryMap.xml"
+      linker_output_format="hex"
+      linker_section_placement_macros="FLASH_START=0xF4000;FLASH_SIZE=0xA000" />
     <configuration
       Name="Release Single"
       gcc_optimization_level="Optimize For Size" />
     <folder Name="lib">
-      <folder
-        Name="sdk"
-        exclude=""
-        filter="*.h;*.c"
-        path="../lib/sdk"
-        recurse="Yes" />
-      <folder Name="sdk11">
-        <folder Name="components">
-          <folder Name="ble">
-            <folder Name="ble_services">
-              <folder Name="ble_dfu">
-                <file file_name="../lib/sdk11/components/ble/ble_services/ble_dfu/ble_dfu.c" />
-                <file file_name="../lib/sdk11/components/ble/ble_services/ble_dfu/ble_dfu.h" />
-              </folder>
-              <folder Name="ble_dis">
-                <file file_name="../lib/sdk11/components/ble/ble_services/ble_dis/ble_dis.c" />
-                <file file_name="../lib/sdk11/components/ble/ble_services/ble_dis/ble_dis.h" />
-              </folder>
-            </folder>
-            <folder Name="common">
-              <file file_name="../lib/sdk11/components/ble/common/ble_srv_common.h" />
-            </folder>
-          </folder>
-          <folder Name="drivers_nrf">
-            <folder Name="pstorage">
-              <file file_name="../lib/sdk11/components/drivers_nrf/pstorage/pstorage.h" />
-              <file file_name="../lib/sdk11/components/drivers_nrf/pstorage/pstorage_raw.c" />
-            </folder>
-          </folder>
-          <folder Name="libraries">
-            <folder Name="bootloader_dfu">
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader.c" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader.h" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader_settings.c" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader_settings.h" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader_types.h" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader_util.c" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader_util.h" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu.h" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_bank_internal.h" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_ble_svc.h" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_ble_svc_internal.h" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_init.h" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_transport.h" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_transport_ble.c" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_transport_serial.c" />
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_types.h" />
-              <folder Name="ble_transport">
-                <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/ble_transport/hci_mem_pool_internal.h" />
-              </folder>
-              <folder Name="hci_transport">
-                <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/hci_transport/hci_mem_pool_internal.h" />
-                <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/hci_transport/hci_transport_config.h" />
-              </folder>
-              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_single_bank.c" />
-            </folder>
-            <folder Name="util">
-              <file file_name="../lib/sdk11/components/libraries/util/nrf_log.h" />
-            </folder>
-          </folder>
-        </folder>
-      </folder>
-      <folder Name="tinyusb">
-        <folder Name="src">
-          <file file_name="../lib/tinyusb/src/tusb.c" />
-          <file file_name="../lib/tinyusb/src/tusb.h" />
-          <file file_name="../lib/tinyusb/src/tusb_hal.h" />
-          <file file_name="../lib/tinyusb/src/tusb_option.h" />
-          <folder Name="class">
-            <folder Name="cdc">
-              <file file_name="../lib/tinyusb/src/class/cdc/cdc.h" />
-              <file file_name="../lib/tinyusb/src/class/cdc/cdc_device.c" />
-              <file file_name="../lib/tinyusb/src/class/cdc/cdc_device.h" />
-            </folder>
-            <folder Name="hid">
-              <file file_name="../lib/tinyusb/src/class/hid/hid.h" />
-              <file file_name="../lib/tinyusb/src/class/hid/hid_device.c" />
-              <file file_name="../lib/tinyusb/src/class/hid/hid_device.h" />
-            </folder>
-            <folder Name="msc">
-              <file file_name="../lib/tinyusb/src/class/msc/msc.h" />
-              <file file_name="../lib/tinyusb/src/class/msc/msc_device.c" />
-              <file file_name="../lib/tinyusb/src/class/msc/msc_device.h" />
-            </folder>
-          </folder>
-          <folder Name="common">
-            <file file_name="../lib/tinyusb/src/common/binary.h" />
-            <file file_name="../lib/tinyusb/src/common/timeout_timer.h" />
-            <file file_name="../lib/tinyusb/src/common/tusb_common.h" />
-            <file file_name="../lib/tinyusb/src/common/tusb_compiler.h" />
-            <file file_name="../lib/tinyusb/src/common/tusb_error.h" />
-            <file file_name="../lib/tinyusb/src/common/tusb_fifo.c" />
-            <file file_name="../lib/tinyusb/src/common/tusb_fifo.h" />
-            <file file_name="../lib/tinyusb/src/common/tusb_types.h" />
-            <file file_name="../lib/tinyusb/src/common/tusb_verify.h" />
-            <folder Name="compiler">
-              <file file_name="../lib/tinyusb/src/common/compiler/tusb_compiler_gcc.h" />
-              <file file_name="../lib/tinyusb/src/common/compiler/tusb_compiler_iar.h" />
-            </folder>
-          </folder>
-          <folder Name="device">
-            <file file_name="../lib/tinyusb/src/device/dcd.h" />
-            <file file_name="../lib/tinyusb/src/device/usbd.c" />
-            <file file_name="../lib/tinyusb/src/device/usbd.h" />
-            <file file_name="../lib/tinyusb/src/device/usbd_pvt.h" />
-            <file file_name="../lib/tinyusb/src/device/usbd_control.c" />
-          </folder>
-          <folder Name="osal">
-            <file file_name="../lib/tinyusb/src/osal/osal.h" />
-            <file file_name="../lib/tinyusb/src/osal/osal_none.h" />
-          </folder>
-          <folder Name="portable">
-            <folder Name="nordic">
-              <folder Name="nrf5x">
-                <file file_name="../lib/tinyusb/src/portable/nordic/nrf5x/dcd_nrf5x.c" />
-              </folder>
-            </folder>
-          </folder>
-        </folder>
-        <configuration Name="Feather52832" build_exclude_from_build="Yes" />
-      </folder>
       <folder Name="nrfx">
-        <file file_name="../lib/nrfx/nrfx.h" />
         <folder Name="drivers">
-          <file file_name="../lib/nrfx/drivers/nrfx_common.h" />
-          <file file_name="../lib/nrfx/drivers/nrfx_errors.h" />
           <folder Name="include">
             <file file_name="../lib/nrfx/drivers/include/nrf_bitmask.h" />
             <file file_name="../lib/nrfx/drivers/include/nrfx_adc.h" />
@@ -216,9 +94,11 @@
             <file file_name="../lib/nrfx/drivers/include/nrfx_wdt.h" />
           </folder>
           <folder Name="src">
-            <file file_name="../lib/nrfx/drivers/src/nrfx_power.c" />
             <file file_name="../lib/nrfx/drivers/src/nrfx_nvmc.c" />
+            <file file_name="../lib/nrfx/drivers/src/nrfx_power.c" />
           </folder>
+          <file file_name="../lib/nrfx/drivers/nrfx_common.h" />
+          <file file_name="../lib/nrfx/drivers/nrfx_errors.h" />
         </folder>
         <folder Name="hal">
           <file file_name="../lib/nrfx/hal/nrf_adc.h" />
@@ -268,19 +148,19 @@
           <file file_name="../lib/nrfx/mdk/nrf_peripherals.h" />
           <file file_name="../lib/nrfx/mdk/ses_startup_nrf52.s">
             <configuration
-              Name="Feather52840 Size++"
+              Name="Feather52840"
               build_exclude_from_build="Yes" />
             <configuration
-              Name="Feather52840"
+              Name="Feather52840 Size++"
               build_exclude_from_build="Yes" />
           </file>
           <file file_name="../lib/nrfx/mdk/ses_startup_nrf52840.s">
             <configuration
-              Name="Feather52840 Size++"
-              build_exclude_from_build="No" />
-            <configuration
               Name="Feather52832"
               build_exclude_from_build="Yes" />
+            <configuration
+              Name="Feather52840 Size++"
+              build_exclude_from_build="No" />
           </file>
           <file file_name="../lib/nrfx/mdk/ses_startup_nrf_common.s">
             <configuration
@@ -290,10 +170,10 @@
           <file file_name="../lib/nrfx/mdk/startup_config.h" />
           <file file_name="../lib/nrfx/mdk/system_nrf52.c">
             <configuration
-              Name="Feather52840 Size++"
+              Name="Feather52840"
               build_exclude_from_build="Yes" />
             <configuration
-              Name="Feather52840"
+              Name="Feather52840 Size++"
               build_exclude_from_build="Yes" />
           </file>
           <file file_name="../lib/nrfx/mdk/system_nrf52.h" />
@@ -312,20 +192,141 @@
           <file file_name="../lib/nrfx/soc/nrfx_irqs_nrf52832.h" />
           <file file_name="../lib/nrfx/soc/nrfx_irqs_nrf52840.h" />
         </folder>
+        <file file_name="../lib/nrfx/nrfx.h" />
+      </folder>
+      <folder
+        Name="sdk"
+        exclude=""
+        filter="*.h;*.c"
+        path="../lib/sdk"
+        recurse="Yes" />
+      <folder Name="sdk11">
+        <folder Name="components">
+          <folder Name="ble">
+            <folder Name="ble_services">
+              <folder Name="ble_dfu">
+                <file file_name="../lib/sdk11/components/ble/ble_services/ble_dfu/ble_dfu.c" />
+                <file file_name="../lib/sdk11/components/ble/ble_services/ble_dfu/ble_dfu.h" />
+              </folder>
+              <folder Name="ble_dis">
+                <file file_name="../lib/sdk11/components/ble/ble_services/ble_dis/ble_dis.c" />
+                <file file_name="../lib/sdk11/components/ble/ble_services/ble_dis/ble_dis.h" />
+              </folder>
+            </folder>
+            <folder Name="common">
+              <file file_name="../lib/sdk11/components/ble/common/ble_srv_common.h" />
+            </folder>
+          </folder>
+          <folder Name="drivers_nrf">
+            <folder Name="pstorage">
+              <file file_name="../lib/sdk11/components/drivers_nrf/pstorage/pstorage.h" />
+              <file file_name="../lib/sdk11/components/drivers_nrf/pstorage/pstorage_raw.c" />
+            </folder>
+          </folder>
+          <folder Name="libraries">
+            <folder Name="bootloader_dfu">
+              <folder Name="ble_transport">
+                <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/ble_transport/hci_mem_pool_internal.h" />
+              </folder>
+              <folder Name="hci_transport">
+                <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/hci_transport/hci_mem_pool_internal.h" />
+                <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/hci_transport/hci_transport_config.h" />
+              </folder>
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader.c" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader.h" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader_settings.c" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader_settings.h" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader_types.h" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader_util.c" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/bootloader_util.h" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu.h" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_bank_internal.h" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_ble_svc.h" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_ble_svc_internal.h" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_init.h" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_single_bank.c" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_transport.h" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_transport_ble.c" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_transport_serial.c" />
+              <file file_name="../lib/sdk11/components/libraries/bootloader_dfu/dfu_types.h" />
+            </folder>
+            <folder Name="util">
+              <file file_name="../lib/sdk11/components/libraries/util/nrf_log.h" />
+            </folder>
+          </folder>
+        </folder>
+      </folder>
+      <folder Name="tinyusb">
+        <configuration Name="Feather52832" build_exclude_from_build="Yes" />
+        <folder Name="src">
+          <folder Name="class">
+            <folder Name="cdc">
+              <file file_name="../lib/tinyusb/src/class/cdc/cdc.h" />
+              <file file_name="../lib/tinyusb/src/class/cdc/cdc_device.c" />
+              <file file_name="../lib/tinyusb/src/class/cdc/cdc_device.h" />
+            </folder>
+            <folder Name="hid">
+              <file file_name="../lib/tinyusb/src/class/hid/hid.h" />
+              <file file_name="../lib/tinyusb/src/class/hid/hid_device.c" />
+              <file file_name="../lib/tinyusb/src/class/hid/hid_device.h" />
+            </folder>
+            <folder Name="msc">
+              <file file_name="../lib/tinyusb/src/class/msc/msc.h" />
+              <file file_name="../lib/tinyusb/src/class/msc/msc_device.c" />
+              <file file_name="../lib/tinyusb/src/class/msc/msc_device.h" />
+            </folder>
+          </folder>
+          <folder Name="common">
+            <folder Name="compiler">
+              <file file_name="../lib/tinyusb/src/common/compiler/tusb_compiler_gcc.h" />
+              <file file_name="../lib/tinyusb/src/common/compiler/tusb_compiler_iar.h" />
+            </folder>
+            <file file_name="../lib/tinyusb/src/common/binary.h" />
+            <file file_name="../lib/tinyusb/src/common/timeout_timer.h" />
+            <file file_name="../lib/tinyusb/src/common/tusb_common.h" />
+            <file file_name="../lib/tinyusb/src/common/tusb_compiler.h" />
+            <file file_name="../lib/tinyusb/src/common/tusb_error.h" />
+            <file file_name="../lib/tinyusb/src/common/tusb_fifo.c" />
+            <file file_name="../lib/tinyusb/src/common/tusb_fifo.h" />
+            <file file_name="../lib/tinyusb/src/common/tusb_types.h" />
+            <file file_name="../lib/tinyusb/src/common/tusb_verify.h" />
+          </folder>
+          <folder Name="device">
+            <file file_name="../lib/tinyusb/src/device/dcd.h" />
+            <file file_name="../lib/tinyusb/src/device/usbd.c" />
+            <file file_name="../lib/tinyusb/src/device/usbd.h" />
+            <file file_name="../lib/tinyusb/src/device/usbd_control.c" />
+            <file file_name="../lib/tinyusb/src/device/usbd_pvt.h" />
+          </folder>
+          <folder Name="osal">
+            <file file_name="../lib/tinyusb/src/osal/osal.h" />
+            <file file_name="../lib/tinyusb/src/osal/osal_none.h" />
+          </folder>
+          <folder Name="portable">
+            <folder Name="nordic">
+              <folder Name="nrf5x">
+                <file file_name="../lib/tinyusb/src/portable/nordic/nrf5x/dcd_nrf5x.c" />
+              </folder>
+            </folder>
+          </folder>
+          <file file_name="../lib/tinyusb/src/tusb.c" />
+          <file file_name="../lib/tinyusb/src/tusb.h" />
+          <file file_name="../lib/tinyusb/src/tusb_hal.h" />
+          <file file_name="../lib/tinyusb/src/tusb_option.h" />
+        </folder>
       </folder>
     </folder>
-    <configuration
-      Name="Feather52840"
-      c_preprocessor_definitions="NRF52840_XXAA;S140"
-      c_user_include_directories="../src/boards/feather_nrf52840_express"
-      gcc_optimization_level="Debug"
-      linker_memory_map_file="nRF52840_xxAA_MemoryMap.xml" />
-    <configuration
-      Name="Feather52832"
-      c_preprocessor_definitions="NRF52832_XXAA;S132"
-      c_user_include_directories="../src/boards/feather_nrf52832"
-      gcc_optimization_level="Debug"
-      linker_memory_map_file="nRF52832_xxAA_MemoryMap.xml" />
+    <folder Name="RTT Files">
+      <file file_name="SEGGER_RTT.c" />
+      <file file_name="SEGGER_RTT.h" />
+      <file file_name="SEGGER_RTT_Conf.h" />
+      <file file_name="SEGGER_RTT_SES.c" />
+    </folder>
+    <folder Name="Script Files">
+      <file file_name="nRF_Target.js">
+        <configuration Name="Common" file_type="Reset Script" />
+      </file>
+    </folder>
     <folder Name="src">
       <folder Name="boards">
         <folder Name="feather_nrf52840_express">
@@ -341,6 +342,12 @@
         filter="*.c;*.h"
         path="../src/cmsis"
         recurse="Yes" />
+      <folder
+        Name="usb"
+        exclude=""
+        filter="*.c;*.h"
+        path="../src/usb"
+        recurse="Yes" />
       <file file_name="../src/dfu_ble_svc.c" />
       <file file_name="../src/dfu_init.c" />
       <file file_name="../src/flash_nrf5x.c" />
@@ -350,14 +357,16 @@
       <file file_name="../src/nrfx_glue.h" />
       <file file_name="../src/pstorage_platform.h" />
       <file file_name="../src/sdk_config.h" />
-      <folder
-        Name="usb"
-        exclude=""
-        filter="*.c;*.h"
-        path="../src/usb"
-        recurse="Yes" />
+    </folder>
+    <folder Name="System Files">
+      <file file_name="flash_placement.xml" />
+      <file file_name="nRF52832_xxAA_MemoryMap.xml" />
+      <file file_name="nRF52840_xxAA_MemoryMap.xml" />
+      <file file_name="thumb_crt0.s" />
     </folder>
   </project>
-  <configuration Name="Feather52840" />
-  <configuration Name="Feather52832" />
+  <configuration
+    Name="Common"
+    linker_memory_map_file="$(ProjectDir)/nRF52840_xxAA_MemoryMap.xml"
+    linker_section_placement_macros="FLASH_START=0xF4000;FLASH_SIZE=0xA000" />
 </solution>
